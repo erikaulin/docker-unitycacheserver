@@ -1,0 +1,12 @@
+##erik's standard stuff
+*.crt
+*.key
+*.p12
+*.pem
+*.csr
+*.cert
+*.DS_Store
+*.htpasswd
+*.*.old
+custom
+SLASK
