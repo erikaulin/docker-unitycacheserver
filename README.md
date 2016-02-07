@@ -9,10 +9,10 @@ Run `docker-compose up -d` After a minute Unity Cache Server should be listening
 #### docker-compose.yml
 ```
 unitycacheserver:
-  build: .
+  image: erikaulin/unitycacheserver:latest
   container_name: unitycacheserver
   ports:
-    - "8125:8125"
+    - "8125:8125" # legacy port
     - "8126:8126"
   volumes_from:
     - volumes
@@ -21,7 +21,6 @@ volumes:
   container_name: unitycacheserver_data
   volumes:
     # Main Directory
-    - /opt/CacheServer
     - /cache
     - /cache5.0
   command: /bin/echo

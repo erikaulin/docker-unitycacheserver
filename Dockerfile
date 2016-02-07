@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER Erik Aulin <erik@aulin.co>
 ENV DEBIAN_FRONTEND=noninteractive
 
-# install prereqs
+# Install prereqs
 RUN apt-get update \
     && apt-get -qy --no-install-recommends install \
         unzip \
@@ -14,10 +14,11 @@ RUN apt-get update \
     && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
     && rm -rf /usr/share/man/?? /usr/share/man/??_*
 
-RUN mkdir /src
-WORKDIR /src
-COPY UnityCacheServer.sh /src/
-COPY unity_cache_server /etc/init.d/
-RUN chmod a+x /src/UnityCacheServer.sh
-RUN chmod a+x /etc/init.d/unity_cache_server
-ENTRYPOINT ["/src/UnityCacheServer.sh"]
+WORKDIR /opt
+
+# Download and install CacheServer
+ADD http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-5.3.2f1.zip /opt
+RUN unzip CacheServer-5.3.2f1.zip \
+  && rm CacheServer-5.3.2f1.zip
+
+CMD ["/opt/CacheServer/RunLinux.sh"]
