@@ -14,11 +14,9 @@ RUN apt-get update \
     && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
     && rm -rf /usr/share/man/?? /usr/share/man/??_*
 
-WORKDIR /opt
-
 # Download and install CacheServer
-ADD http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-5.3.2f1.zip /opt
-RUN unzip CacheServer-5.3.2f1.zip \
-  && rm CacheServer-5.3.2f1.zip
+ADD http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-5.3.2f1.zip /opt/
+RUN unzip /opt/CacheServer-5.3.2f1.zip \
+  && rm /opt/CacheServer-5.3.2f1.zip
 
 CMD ["/opt/CacheServer/RunLinux.sh"]
