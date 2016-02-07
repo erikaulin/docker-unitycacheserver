@@ -1,0 +1,15 @@
+#!/bin/bash
+VERSION="5.3.2f1"
+CMD=/opt/CacheServer/RunLinux.sh
+
+if [ ! -f $CMD ]
+then
+    echo "Download and unpack Unity Cache Server"
+    cd /opt
+    wget http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-${VERSION}.zip
+    unzip CacheServer-${VERSION}.zip
+    rm CacheServer-${VERSION}.zip
+fi
+
+echo "Starting Services"
+/opt/CacheServer/RunLinux.sh
