@@ -21,8 +21,8 @@ volumes:
   container_name: unitycacheserver_data
   volumes:
     # Main Directory
-    - /cache
-    - /cache5.0
+    - /opt/cache
+    - /opt/cache5.0
   command: /bin/echo
 ```
 
