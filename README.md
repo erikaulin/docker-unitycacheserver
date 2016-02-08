@@ -26,10 +26,49 @@ volumes:
   command: /bin/echo
 ```
 
+#### Dockerfile
+```
+FROM debian:jessie
+MAINTAINER Erik Aulin <erik@aulin.co>
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install prereqs
+RUN apt-get update \
+    && apt-get -qy --no-install-recommends install \
+        unzip \
+        cpio \
+        curl \
+        wget \
+    && apt-get -q -y clean \
+    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
+    && rm -rf /usr/share/man/?? /usr/share/man/??_*
+
+RUN mkdir /src
+WORKDIR /src
+COPY unitycacheserver /src/
+RUN chmod a+x /src/unitycacheserver
+ENTRYPOINT ["/src/unitycacheserver"]
+```
+
+#### unitycacheserver
+```
+#!/bin/bash
+VERSION="5.3.2f1"
+CMD=/opt/CacheServer/RunLinux.sh
+
+if [ ! -f $CMD ]
+then
+    echo "Download and unpack Unity Cache Server"
+    cd /opt
+    wget http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-${VERSION}.zip
+    unzip CacheServer-${VERSION}.zip
+    rm CacheServer-${VERSION}.zip
+fi
+
+echo "Starting Services"
+/opt/CacheServer/RunLinux.sh
+```
+
 ## Maintainers
 
 * [Erik Aulin](mailto:erik@aulin.co)
-
-## Credits
-
-* [Jarnik](http://www.jarnik.com/1860-on-unity-asset-cache-server)
