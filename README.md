@@ -53,7 +53,7 @@ ENTRYPOINT ["/src/unitycacheserver"]
 #### unitycacheserver
 ```
 #!/bin/bash
-VERSION="5.3.2f1"
+VERSION="5.4.0f3"
 CMD=/opt/CacheServer/RunLinux.sh
 
 if [ ! -f $CMD ]

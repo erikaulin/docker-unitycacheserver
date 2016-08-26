@@ -1,5 +1,6 @@
 unitycacheserver:
   image: erikaulin/unitycacheserver:latest
+  #build: .
   container_name: unitycacheserver
   ports:
     - "8125:8125" # legacy port
