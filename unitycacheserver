@@ -1,14 +1,13 @@
 #!/bin/bash
-#VERSION="5.3.2f1"
-VERSION="5.4.0f3"
+http://netstorage.unity3d.com/unity/649f48bbbf0f/CacheServer-5.4.1f1.zip
+VERSION="5.4.1f1"
 CMD=/opt/CacheServer/RunLinux.sh
 
 if [ ! -f $CMD ]
 then
     echo "Download and unpack Unity Cache Server"
     cd /opt
-    #wget http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-${VERSION}.zip
-    wget http://netstorage.unity3d.com/unity/a6d8d714de6f/CacheServer-${VERSION}.zip
+    wget http://netstorage.unity3d.com/unity/649f48bbbf0f/CacheServer-${VERSION}.zip
     unzip CacheServer-${VERSION}.zip
     rm CacheServer-${VERSION}.zip
 fi
