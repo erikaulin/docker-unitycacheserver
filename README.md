@@ -4,7 +4,7 @@ Unity Cache Server server container
 
 ## Usage
 
-Run `docker-compose up -d` After a minute Unity Cache Server should be listening on ports 8125 and 8126.
+Run `docker-compose up -d` After a minute Unity Cache Server should be listening on ports 8126.
 
 #### docker-compose.yml
 ```
