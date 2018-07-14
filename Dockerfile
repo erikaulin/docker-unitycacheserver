@@ -1,20 +1,9 @@
-FROM debian:jessie
-MAINTAINER Erik Aulin <erik@aulin.co>
-ENV DEBIAN_FRONTEND=noninteractive
+FROM node:8-alpine
 
-# Install prereqs
-RUN apt-get update \
-    && apt-get -qy --no-install-recommends install \
-        unzip \
-        cpio \
-        curl \
-        wget \
-    && apt-get -q -y clean \
-    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
-    && rm -rf /usr/share/man/?? /usr/share/man/??_*
+LABEL MAINTAINER="Erik Aulin erik@aulin.co"
 
-RUN mkdir /src
-WORKDIR /src
-COPY unitycacheserver /src/
-RUN chmod a+x /src/unitycacheserver
-ENTRYPOINT ["/src/unitycacheserver"]
+RUN npm install unity-cache-server -g && \
+    npm cache clean --force && \
+    mkdir -p /opt/cache
+
+CMD ["unity-cache-server", "-P", "/opt/cache"]

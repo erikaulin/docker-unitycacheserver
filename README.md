@@ -12,7 +12,6 @@ unitycacheserver:
   image: erikaulin/unitycacheserver:latest
   container_name: unitycacheserver
   ports:
-    - "8125:8125" # legacy port
     - "8126:8126"
   volumes_from:
     - volumes
@@ -22,51 +21,20 @@ volumes:
   volumes:
     # Main Directory
     - /opt/cache
-    - /opt/cache5.0
   command: /bin/echo
 ```
 
 #### Dockerfile
 ```
-FROM debian:jessie
-MAINTAINER Erik Aulin <erik@aulin.co>
-ENV DEBIAN_FRONTEND=noninteractive
+FROM node:8-alpine
 
-# Install prereqs
-RUN apt-get update \
-    && apt-get -qy --no-install-recommends install \
-        unzip \
-        cpio \
-        curl \
-        wget \
-    && apt-get -q -y clean \
-    && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* \
-    && rm -rf /usr/share/man/?? /usr/share/man/??_*
+LABEL MAINTAINER="Erik Aulin erik@aulin.co"
 
-RUN mkdir /src
-WORKDIR /src
-COPY unitycacheserver /src/
-RUN chmod a+x /src/unitycacheserver
-ENTRYPOINT ["/src/unitycacheserver"]
-```
+RUN npm install unity-cache-server -g && \
+    npm cache clean --force && \
+    mkdir -p /opt/cache
 
-#### unitycacheserver
-```
-#!/bin/bash
-VERSION="5.4.0f3"
-CMD=/opt/CacheServer/RunLinux.sh
-
-if [ ! -f $CMD ]
-then
-    echo "Download and unpack Unity Cache Server"
-    cd /opt
-    wget http://netstorage.unity3d.com/unity/e87ab445ead0/CacheServer-${VERSION}.zip
-    unzip CacheServer-${VERSION}.zip
-    rm CacheServer-${VERSION}.zip
-fi
-
-echo "Starting Services"
-/opt/CacheServer/RunLinux.sh
+CMD ["unity-cache-server", "-P", "/opt/cache"]
 ```
 
 ## Maintainers
